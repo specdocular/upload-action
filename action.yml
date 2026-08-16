@@ -1,0 +1,44 @@
+name: 'Specdocular Upload'
+description: 'Upload an OpenAPI description to the Specdocular platform from any CI.'
+author: 'Specdocular'
+branding:
+  icon: 'upload-cloud'
+  color: 'blue'
+
+inputs:
+  file:
+    description: 'Path to the OpenAPI description document.'
+    required: true
+  project-slug:
+    description: 'The Specdocular project the spec belongs to.'
+    required: true
+  token:
+    description: 'The project CI ingest token. Store it as a repository secret.'
+    required: true
+  platform-url:
+    description: 'Override the platform origin (for staging or self-review).'
+    required: false
+  commit:
+    description: 'The commit SHA. Defaults to the workflow commit ($GITHUB_SHA).'
+    required: false
+  branch:
+    description: 'The branch name. Defaults to the workflow branch.'
+    required: false
+  generator-name:
+    description: 'Optional producer name recorded as provenance.'
+    required: false
+  generator-version:
+    description: 'Optional producer version recorded as provenance.'
+    required: false
+
+outputs:
+  api-description-version-id:
+    description: 'The id of the created (or existing, on dedup) API description version.'
+  api-description-version-url:
+    description: 'The URL of the created API description version. Empty on a deduplicated upload.'
+  dedup:
+    description: '"true" when the platform already had this exact spec, "false" otherwise.'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
