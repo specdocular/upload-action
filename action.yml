@@ -40,5 +40,5 @@ outputs:
     description: '"true" when the platform already had this exact spec, "false" otherwise.'
 
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/index.js'
