@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build:test": "tsc -p tsconfig.json",
-    "test": "npm run build:test && node --test build/",
+    "test": "npm run build:test && node --test \"build/**/*.test.js\"",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "package": "ncc build src/index.ts -o dist --source-map",
     "all": "npm run typecheck && npm run test && npm run package"
