@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run all
+      # dist/ is the committed ncc bundle that action.yml runs. `npm run all`
+      # rebuilds it from the current src, so a non-empty diff here means the
+      # bundle was committed without `npm run package` and would ship stale
+      # compiled code. The bundle is byte-reproducible under the lockfile-pinned
+      # ncc, so this gate fails only on a genuinely stale dist, never on rebuild
+      # noise.
+      - run: git diff --exit-code dist
