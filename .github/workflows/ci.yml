@@ -12,7 +12,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # The action itself runs on the node20 runtime (action.yml), which runs
+          # the bundled dist. The test suite is separate and its `node --test`
+          # glob needs node 21+, so CI runs the current LTS.
+          node-version: 22
           cache: npm
       - run: npm ci
       - run: npm run all
