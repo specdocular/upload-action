@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [21, 22, 24]
     # The job only reads: checkout, npm ci, and a git diff. No commit or push,
     # so the default token is narrowed to read-only, matching the sibling repos.
     permissions:
@@ -16,10 +19,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          # The action itself runs on the node20 runtime (action.yml), which runs
-          # the bundled dist. The test suite is separate and its `node --test`
-          # glob needs node 21+, so CI runs the current LTS.
-          node-version: 22
+          # CI runs the suite across the whole supported node range so a
+          # boundary regression fails loudly: the engines floor (21, where the
+          # `node --test` glob first works), the current LTS (22), and the
+          # node24 runtime the action itself ships on (action.yml). The test
+          # suite runs on the runner node here; the bundled dist runs on node24
+          # in production regardless.
+          node-version: ${{ matrix.node }}
           cache: npm
       - run: npm ci
       - run: npm run all
