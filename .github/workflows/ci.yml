@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # The job only reads: checkout, npm ci, and a git diff. No commit or push,
+    # so the default token is narrowed to read-only, matching the sibling repos.
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
