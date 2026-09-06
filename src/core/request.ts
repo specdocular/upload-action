@@ -1,7 +1,7 @@
 /** The platform ingest endpoint for a project's spec pushes. */
 export function buildEndpoint(platformUrl: string, slug: string): string {
   const origin = platformUrl.replace(/\/+$/, '');
-  return `${origin}/api/v1/projects/${encodeURIComponent(slug)}/builds`;
+  return `${origin}/api/v1/projects/${encodeURIComponent(slug)}/versions`;
 }
 
 /**

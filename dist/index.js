@@ -27542,7 +27542,7 @@ function describeFailure(outcome) {
 /** The platform ingest endpoint for a project's spec pushes. */
 function buildEndpoint(platformUrl, slug) {
     const origin = platformUrl.replace(/\/+$/, '');
-    return `${origin}/api/v1/projects/${encodeURIComponent(slug)}/builds`;
+    return `${origin}/api/v1/projects/${encodeURIComponent(slug)}/versions`;
 }
 /**
  * Resolve the branch name from the explicit input, then the PR head ref, then

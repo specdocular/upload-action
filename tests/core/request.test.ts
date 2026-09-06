@@ -5,22 +5,22 @@ import { buildEndpoint, resolveBranch } from '../../src/core/request.js';
 test('buildEndpoint templates the ingest path and strips trailing slashes', () => {
   assert.equal(
     buildEndpoint('https://specdocular.com', 'my-project'),
-    'https://specdocular.com/api/v1/projects/my-project/builds',
+    'https://specdocular.com/api/v1/projects/my-project/versions',
   );
   assert.equal(
     buildEndpoint('https://specdocular.com/', 'my-project'),
-    'https://specdocular.com/api/v1/projects/my-project/builds',
+    'https://specdocular.com/api/v1/projects/my-project/versions',
   );
   assert.equal(
     buildEndpoint('https://specdocular.com///', 'my-project'),
-    'https://specdocular.com/api/v1/projects/my-project/builds',
+    'https://specdocular.com/api/v1/projects/my-project/versions',
   );
 });
 
 test('buildEndpoint url-encodes the slug', () => {
   assert.equal(
     buildEndpoint('https://specdocular.com', 'a b/c'),
-    'https://specdocular.com/api/v1/projects/a%20b%2Fc/builds',
+    'https://specdocular.com/api/v1/projects/a%20b%2Fc/versions',
   );
 });
 
